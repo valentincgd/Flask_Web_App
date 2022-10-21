@@ -45,7 +45,7 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   position: relative;
 }
 
@@ -56,17 +56,20 @@ body {
   -webkit-transition: .2s;
   transition: .2s;
   color: gray;
+  cursor: text;
 }
 
 .container form .block label.focus {
-  top: -5px;
+  top: -7px;
   left: 5px;
   color: black;
+  cursor: default;
 }
 
 .container form .block input {
   width: 200px;
   padding: 10px;
+  padding-bottom: 5px;
   border: none;
   border-bottom: 1px black solid;
   background: none;
@@ -79,11 +82,12 @@ body {
 }
 
 .container form .block input:focus + label {
-  top: -5px;
+  top: -7px;
   left: 5px;
   -webkit-transition: .2s;
   transition: .2s;
   color: black;
+  cursor: default;
 }
 
 .container form button[type=submit] {
