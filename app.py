@@ -55,7 +55,7 @@ def login():
         # login the user using session
         session["user_id"] = user[0][0]
 
-        # return success
+        # return success 
         return redirect("/")
 
     else:
