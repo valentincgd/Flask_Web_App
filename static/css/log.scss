@@ -4,6 +4,7 @@ body{
     padding: 0;
     margin: 0;
     font-family: Kanit, 'Montserrat', sans-serif, 'Courier New', Courier, monospace;
+    color: var(--txt);
 }
 
 .container{
@@ -18,6 +19,10 @@ body{
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background: var(--background);
+        filter:drop-shadow(0 0 0.75rem var(--shadow));
+        padding: 30px;
+        border-radius: 10px;
         .block{
             display: flex;
             flex-direction: column;
@@ -34,7 +39,7 @@ body{
             label.focus{
                 top: -7px;
                 left: 5px;
-                color: black;
+                color: var(--txt);
                 cursor: default;
             }
             input{
@@ -42,38 +47,41 @@ body{
                 padding: 10px;
                 padding-bottom: 5px;
                 border: none;
-                border-bottom: 1px black solid;
+                border-bottom: 1px var(--txt) solid;
                 background: none;
                 outline: none;
                 margin-top: 5px;
                 &:focus{
-                    border-color: blue;
+                    border-color: var(--select);
                 }
                 &:focus + label{
                     top: -7px;
                     left: 5px;
                     transition: .2s;
-                    color: black;
+                    color: var(--txt);
                     cursor: default;
                 }
             }
         }
         button[type=submit]{
-            margin-bottom: 10px;
+            margin-top: 30px;
             width: 200px;
             padding: 10px;
             cursor: pointer;
-            background: rgb(231, 231, 231);
+            background: var(--select);
+            color: var(--background);
             border: none;
             border-radius: 2px;
+            font-family: Kanit, 'Montserrat', sans-serif, 'Courier New', Courier, monospace;
+            font-size: 15px;
             &:hover{
                 filter: brightness(0.8);
             }
         }
         a{
             text-align: center;
-            margin-bottom: 10px;
-            width: 150px;
+            margin-top: 10px;
+            width: 180px;
             padding: 10px;
             cursor: pointer;
             background: rgb(231, 231, 231);
@@ -81,6 +89,7 @@ body{
             border-radius: 2px;
             text-decoration: none;
             color: black;
+            font-size: 15px;
             &:hover{
                 filter: brightness(0.8);
             }
