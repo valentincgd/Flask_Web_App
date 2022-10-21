@@ -111,7 +111,7 @@ def login():
 @app.route("/")
 def index():
     if "user_id" in session:
-        return f'Logged in as {session["user_id"]}'
+        return render_template("index.html", errorMessage="")
     return redirect("/login")
 
 
