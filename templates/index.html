@@ -4,13 +4,33 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
   <title>Document</title>
 </head>
 <body>
-  <h1>Successfully logged!</h1>
-  <hr>
-  <p>
-    <a href="/logout" role="button">Logout</a>
-  </p>
+  <header>
+    <h2>MarmiFlask</h2>
+  </header>
+
+  <div class="container">
+
+    {% for i in recipes %}
+    <div class="block">
+      <div class="title">
+        <span>{{ i[1] }}</span>
+        <h3>{{ i[2] }}</h3>
+      </div>
+      <p>
+        {{ i[3] }}
+      </p>
+    </div>
+    {% endfor %}
+
+  </div>
+
+  <footer>
+
+  </footer>
 </body>
 </html>
