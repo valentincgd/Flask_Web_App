@@ -14,15 +14,33 @@ Pages:
     - ez
 
 - Home
-    - AFFICHER LES RECETTES
+    - Show recipes
 
 - DB:
     - Users:
+        - ID_USER
         - EMAIL
         - PASSWORD
         - USERNAME
 
-Objectifs secondaires :
+    - Recipes
+        - ID_RECIPE
+        - RECIPE_NAME
+        - ID_USER
+        - DESCRIPT
 
-- Page des recettes individuelles -> Slug
-- Barre de recherche de recette
+    - Ingredients
+        - ID_INGREDIENT
+        - INGREDIENT_NAME
+        - INGREDIENT_QT
+        - ID_UNIT
+        - ID_RECIPE
+
+    - Unit
+        - ID_UNIT
+        - UNIT_NAME
+
+Secondary objectives :
+
+- Individual Recipes Page -> Slug
+- Search bar
