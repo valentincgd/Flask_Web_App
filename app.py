@@ -111,9 +111,8 @@ def login():
 @app.route("/")
 def index():
     recipes = c.execute("SELECT * FROM recipes").fetchall()
-    print(recipes)
     if "user_id" in session:
-        return render_template("index.html", errorMessage="")
+        return render_template("index.html", recipes=recipes)
     return redirect("/login")
 
 
