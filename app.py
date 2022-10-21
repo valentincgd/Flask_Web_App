@@ -6,22 +6,26 @@ app=Flask(__name__)
 
 
 
-app.secret_key = 'da0VyW270O7802KINXaHtcmO3bufcMtW'
+app.secret_key = 'JaNdRgUkXp2s5v8y/B?E(H+MbPeShVmY'
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
 
 
 
 @app.route('/',methods=['GET'])
 def get_home():
-    return render_template('home.html')
+    if session['session'] == True:
+        return render_template('home.html')
+    else:
+        return redirect('/error')
+
+    
 
 
 @app.route('/login',methods=['GET','POST'])
 def get_login():
     if request.method == 'GET':
-        print(session['Session'])
+        print(session['session'])
         return render_template('login.html')
     if request.method == 'POST':
             return redirect('/')
@@ -34,9 +38,18 @@ def get_signup():
         return render_template('signup.html')
     if request.method == 'POST':
         
+        email = request.form['email']
+        password = request.form['password']
+        username = request.form['username']        
         
         
-        session['Session'] = request.form['username']
+        
+        
+        
+        
+        
+        
+        session['session'] = username
 
         
         #ADD DANS LA BDD
