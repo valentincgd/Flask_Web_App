@@ -34,7 +34,9 @@ def signup():
             or not request.form.get("password")
             or not request.form.get("username")
         ):
-            return "please fill out all fields"
+            return render_template(
+                "signup.html", errorMessage="Please fill out all fields."
+            )
 
         # check if email exist in the database
         exist = c.execute(
@@ -43,12 +45,13 @@ def signup():
         ).fetchall()
 
         if len(exist) != 0:
-            return "user already registered"
+            return render_template(
+                "signup.html", errorMessage="Email already registered."
+            )
 
         # hash the password
-        pwhash = request.form.get(
-            "password"
-        )  # generate_password_hash(request.form.get("password"))
+        pwhash = request.form.get("password")
+        # generate_password_hash(request.form.get("password"))
 
         # insert the row
         c.execute(
@@ -66,7 +69,7 @@ def signup():
 
         return redirect("/")
     else:
-        return render_template("signup.html")
+        return render_template("signup.html", errorMessage="")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -75,7 +78,9 @@ def login():
     if request.method == "POST":
         # check the form is valid
         if not request.form.get("email") or not request.form.get("password"):
-            return "please fill out all required fields"
+            return render_template(
+                "login.html", errorMessage="Please fill out all required fields."
+            )
 
         # check if email exist in the database
         user = c.execute(
@@ -84,13 +89,14 @@ def login():
         ).fetchall()
 
         if len(user) != 1:
-            return "you didn't register"
+            return render_template("login.html", errorMessage="You didn't register.")
+
         # check the password is same to password hash
         pwhash = user[0][1]
         #        if check_password_hash(pwhash, request.form.get("password")) == False:
 
         if pwhash != request.form.get("password"):
-            return "wrong password"
+            return render_template("login.html", errorMessage="Wrong password.")
 
         # login the user using session
         session["user_id"] = user[0][0]
@@ -99,7 +105,7 @@ def login():
         return redirect("/")
 
     else:
-        return render_template("login.html")
+        return render_template("login.html", errorMessage="")
 
 
 @app.route("/")
