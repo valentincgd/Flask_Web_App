@@ -1,6 +1,5 @@
 /__pycache__/
 /env/
-*.sql
 *.db
 *.sqlite3
 /.history/
