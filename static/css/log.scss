@@ -7,6 +7,9 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 100px;
+    width: 100%;
+    height: calc(100vh - 100px);
     form{
         display: flex;
         flex-direction: column;
@@ -16,13 +19,20 @@ body{
             display: flex;
             flex-direction: column;
             margin-bottom: 10px;
+            position: relative;
             label{
-                margin-left: 5px;
+                position: absolute;
+                top: 12px;
+                left: 10px;
+                transition: .2s;
+            }
+            label.focus{
+                top: -5px;
+                left: 5px;
             }
             input{
                 width: 200px;
                 padding: 10px;
-                // border-radius: 10px;
                 border: none;
                 border-bottom: 1px black solid;
                 background: none;
@@ -30,6 +40,11 @@ body{
                 margin-top: 5px;
                 &:focus{
                     border-color: blue;
+                }
+                &:focus + label{
+                    top: -5px;
+                    left: 5px;
+                    transition: .2s;
                 }
             }
         }
