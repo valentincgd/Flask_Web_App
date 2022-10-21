@@ -1,11 +1,14 @@
 from flask import Flask, url_for, render_template, request, redirect, session
+from werkzeug.security import check_password_hash, generate_password_hash
+
 import sqlite3
 
 conn = sqlite3.connect("db.sqlite3", check_same_thread=False)
 c = conn.cursor()
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "H@McQfTjWnZr4u7x!A%D*G-KaNdRgUkX"
+
+app.config["SECRET_KEY"] = "9af5477e9770cc80f836ba957033432486844f49e24a62c79f2df6cca073a27a"
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -22,7 +25,7 @@ def signup():
                 return "user already registered"
 
             # hash the password
-            pwhash = request.form.get("password")
+            pwhash = generate_password_hash(request.form.get("password"), method="pbkdf2:sha256", salt_length=8)
 
             # insert the row
             c.execute("INSERT INTO users (email, password) VALUES (:email, :password)", {"email": request.form.get("email"), "password": pwhash})
@@ -49,7 +52,7 @@ def login():
             return "you didn't register"
         # check the password is same to password hash
         pwhash = user[0][1]
-        if pwhash != request.form.get("password"):
+        if check_password_hash(pwhash, request.form.get("password")) == False:
             return "wrong password"
 
         # login the user using session
