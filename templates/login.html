@@ -13,11 +13,11 @@
         <h1 class="h1">Login Form</h1>
         <form action="{{ url_for('login') }}" method="POST" class="form-group">
             <div class="block">
-                <input type="email" name="email" id="email-txt" placeholder="">
+                <input type="email" name="email" id="email-txt" placeholder="" required>
                 <label for="email-txt" id="email-label">Email</label>
             </div>
             <div class="block">
-                <input type="password" name="password" id="password-txt" placeholder="">
+                <input type="password" name="password" id="password-txt" placeholder="" required>
                 <label for="password-txt" id="password-label">Password</label>
             </div>
             <button type="submit">Submit</button>
