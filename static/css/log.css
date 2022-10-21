@@ -132,4 +132,9 @@ body {
   -webkit-filter: brightness(0.8);
           filter: brightness(0.8);
 }
+
+.container span {
+  margin-top: 30px;
+  color: var(--error);
+}
 /*# sourceMappingURL=log.css.map */

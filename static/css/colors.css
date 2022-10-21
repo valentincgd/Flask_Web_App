@@ -4,5 +4,6 @@ body{
     --shadow: rgb(105, 105, 105);
     --background: white;
     --select: rgb(0, 133, 156);
+    --error: rgb(179, 0, 0);
 
 }
