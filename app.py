@@ -7,6 +7,11 @@ app=Flask(__name__)
 
 
 app.secret_key = 'da0VyW270O7802KINXaHtcmO3bufcMtW'
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
+
 
 @app.route('/',methods=['GET'])
 def get_home():
@@ -28,6 +33,9 @@ def get_signup():
     if request.method == 'GET':
         return render_template('signup.html')
     if request.method == 'POST':
+        
+        
+        
         session['Session'] = request.form['username']
 
         
