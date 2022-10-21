@@ -4,16 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/log.css">
     <title>Document</title>
 </head>
 <body>
-    <h1 class="h1">Login Form</h1>
-    <form action="/login" method="POST" class="form-group">
-
-        <input type="email" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
-        <button type="submit">Submit</button>
-        <a href="/signup">Signup</a>
-    </form>
+    <div class="container">
+        <h1 class="h1">Login Form</h1>
+        <form action="/login" method="POST" class="form-group">
+            <div class="block">
+                <label for="email">Email</label>
+                <input type="email" name="email" placeholder="Email">
+            </div>
+            <div class="block">
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Password">
+            </div>
+            <button type="submit">Submit</button>
+            <a href="/signup">Signup</a>
+        </form>
+    </div>
 </body>
 </html>

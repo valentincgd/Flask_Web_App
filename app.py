@@ -1,67 +1,78 @@
-from flask import Flask, render_template_string,render_template, request, session, redirect, url_for
+from flask import Flask, url_for, render_template, request, redirect, session
+import sqlite3
 
+conn = sqlite3.connect("db.sqlite3", check_same_thread=False)
+c = conn.cursor()
 
+app = Flask(__name__)
+app.config["SECRET_KEY"] = "H@McQfTjWnZr4u7x!A%D*G-KaNdRgUkX"
 
-app=Flask(__name__)
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        # check if the form is valid
 
+            if not request.form.get("email") or not request.form.get("password") or not request.form.get("username"):
+                return "please fill out all fields"
 
+            # check if email exist in the database
+            exist = c.execute("SELECT * FROM users WHERE email=:email", {"email": request.form.get("email")}).fetchall()
 
-app.secret_key = 'JaNdRgUkXp2s5v8y/B?E(H+MbPeShVmY'
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
+            if len(exist) != 0:
+                return "user already registered"
 
+            # hash the password
+            pwhash = request.form.get("password")
 
+            # insert the row
+            c.execute("INSERT INTO users (email, password) VALUES (:email, :password)", {"email": request.form.get("email"), "password": pwhash})
+            conn.commit()
 
-@app.route('/',methods=['GET'])
-def get_home():
-    if session['session'] == True:
-        return render_template('home.html')
+            # return success
+            return "registered successfully!"
     else:
-        return redirect('/error')
-
-    
+        return render_template("signup.html")
 
 
-@app.route('/login',methods=['GET','POST'])
-def get_login():
-    if request.method == 'GET':
-        print(session['session'])
-        return render_template('login.html')
-    if request.method == 'POST':
-            return redirect('/')
+@app.route("/login", methods=["GET", "POST"])
+def login():
 
+    if request.method == "POST":
+        # check the form is valid
+        if not request.form.get("email") or not request.form.get("password"):
+            return "please fill out all required fields"
 
+        # check if email exist in the database
+        user = c.execute("SELECT * FROM users WHERE email=:email", {"email": request.form.get("email")}).fetchall()
 
-@app.route('/signup',methods=['GET','POST'])
-def get_signup():
-    if request.method == 'GET':
-        return render_template('signup.html')
-    if request.method == 'POST':
-        
-        email = request.form['email']
-        password = request.form['password']
-        username = request.form['username']        
-        
-        
-        
-        
-        
-        
-        
-        
-        session['session'] = username
+        if len(user) != 1:
+            return "you didn't register"
+        # check the password is same to password hash
+        pwhash = user[0][1]
+        if pwhash != request.form.get("password"):
+            return "wrong password"
 
-        
-        #ADD DANS LA BDD
+        # login the user using session
+        session["user_id"] = user[0][0]
 
-        return redirect('/')
+        # return success
+        return redirect("/")
+
+    else:
+        return render_template("login.html")
+
+@app.route('/')
+def index():
+    if 'user_id' in session:
+        return f'Logged in as {session["user_id"]}'
+    return redirect("/login")
 
 
 
-@app.route('/logout',methods=['GET'])
+@app.route("/logout")
 def logout():
-    return redirect('/login')
-
+    session.clear()
+    return redirect(url_for("login"))
 
 
 if __name__=='__main__':
