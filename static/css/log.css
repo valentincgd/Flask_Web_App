@@ -1,0 +1,96 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.container form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.container form .block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.container form .block label {
+  margin-left: 5px;
+}
+
+.container form .block input {
+  width: 200px;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px black solid;
+  background: none;
+  outline: none;
+  margin-top: 5px;
+}
+
+.container form .block input:focus {
+  border-color: blue;
+}
+
+.container form button[type=submit] {
+  margin-bottom: 10px;
+  width: 200px;
+  padding: 10px;
+  cursor: pointer;
+  background: #e7e7e7;
+  border: none;
+  border-radius: 2px;
+}
+
+.container form button[type=submit]:hover {
+  -webkit-filter: brightness(0.8);
+          filter: brightness(0.8);
+}
+
+.container form a {
+  text-align: center;
+  margin-bottom: 10px;
+  width: 150px;
+  padding: 10px;
+  cursor: pointer;
+  background: #e7e7e7;
+  border: none;
+  border-radius: 2px;
+  text-decoration: none;
+  color: black;
+}
+
+.container form a:hover {
+  -webkit-filter: brightness(0.8);
+          filter: brightness(0.8);
+}
+/*# sourceMappingURL=log.css.map */
