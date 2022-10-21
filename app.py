@@ -6,10 +6,9 @@ app=Flask(__name__)
 
 
 
-app.secret_key = 'da0VyW270O7802KINXaHtcmO3bufcMtW'
+app.secret_key = 'JaNdRgUkXp2s5v8y/B?E(H+MbPeShVmY'
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
 
 
 
@@ -34,9 +33,18 @@ def get_signup():
         return render_template('signup.html')
     if request.method == 'POST':
         
+        email = request.form['email']
+        password = request.form['password']
+        username = request.form['username']        
         
         
-        session['Session'] = request.form['username']
+        
+        
+        
+        
+        
+        
+        session['Session'] = username
 
         
         #ADD DANS LA BDD
