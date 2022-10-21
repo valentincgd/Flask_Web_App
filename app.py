@@ -14,13 +14,18 @@ app.config["SESSION_TYPE"] = "filesystem"
 
 @app.route('/',methods=['GET'])
 def get_home():
-    return render_template('home.html')
+    if session['session'] == True:
+        return render_template('home.html')
+    else:
+        return redirect('/error')
+
+    
 
 
 @app.route('/login',methods=['GET','POST'])
 def get_login():
     if request.method == 'GET':
-        print(session['Session'])
+        print(session['session'])
         return render_template('login.html')
     if request.method == 'POST':
             return redirect('/')
@@ -44,7 +49,7 @@ def get_signup():
         
         
         
-        session['Session'] = username
+        session['session'] = username
 
         
         #ADD DANS LA BDD
