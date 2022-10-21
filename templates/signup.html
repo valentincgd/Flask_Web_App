@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
     <title>Document</title>
 </head>
 <body>
@@ -12,20 +13,21 @@
         <h1 class="h1">Signup Form</h1>
         <form action="/login" method="POST" class="form-group">
             <div class="block">
-                <label for="email">Username</label>
-                <input type="text" name="Username" placeholder="Username">
+                <input type="text" name="username" placeholder="" id="username-txt">
+                <label for="username-txt" id="username-label">Username</label>
             </div>
             <div class="block">
-                <label for="email">Email</label>
-                <input type="email" name="email" placeholder="Email">
+                <input type="email" name="email" id="email-txt" placeholder="">
+                <label for="email-txt" id="email-label">Email</label>
             </div>
             <div class="block">
-                <label for="password">Password</label>
-                <input type="password" name="password" placeholder="Password">
+                <input type="password" name="password" id="password-txt" placeholder="">
+                <label for="password-txt" id="password-label">Password</label>
             </div>
             <button type="submit">Submit</button>
             <a href="/login">Login</a>
         </form>
     </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
