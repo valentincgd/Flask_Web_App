@@ -29,17 +29,6 @@ Pages:
         - ID_USER
         - DESCRIPT
 
-    - Ingredients
-        - ID_INGREDIENT
-        - INGREDIENT_NAME
-        - INGREDIENT_QT
-        - ID_UNIT
-        - ID_RECIPE
-
-    - Unit
-        - ID_UNIT
-        - UNIT_NAME
-
 Secondary objectives :
 
 - Individual Recipes Page -> Slug
