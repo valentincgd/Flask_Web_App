@@ -38,22 +38,24 @@ def signup():
 
         # check if email exist in the database
         exist = c.execute(
-            "SELECT * FROM users WHERE email=:email",
+            "SELECT * FROM users WHERE user_mail=:email",
             {"email": request.form.get("email")},
         ).fetchall()
 
         if len(exist) != 0:
             return "user already registered"
 
-            # hash the password
-            pwhash = generate_password_hash(
-                request.form.get("password"), method="pbkdf2:sha256", salt_length=8
-            )
+        # hash the password
+        pwhash = request.form.get("password")# generate_password_hash(request.form.get("password"))
 
         # insert the row
         c.execute(
-            "INSERT INTO users (email, password) VALUES (:email, :password)",
-            {"email": request.form.get("email"), "password": pwhash},
+            "INSERT INTO users (user_mail, user_password,user_username) VALUES (:email, :password,:username)",
+            {
+                "email": request.form.get("email"),
+                "password": pwhash,
+                "username": request.form.get("username"),
+            },
         )
         conn.commit()
 
@@ -73,7 +75,7 @@ def login():
 
         # check if email exist in the database
         user = c.execute(
-            "SELECT * FROM users WHERE email=:email",
+            "SELECT * FROM users WHERE user_mail=:email",
             {"email": request.form.get("email")},
         ).fetchall()
 
@@ -81,7 +83,9 @@ def login():
             return "you didn't register"
         # check the password is same to password hash
         pwhash = user[0][1]
-        if check_password_hash(pwhash, request.form.get("password")) == False:
+        #        if check_password_hash(pwhash, request.form.get("password")) == False:
+
+        if pwhash != request.form.get("password"):
             return "wrong password"
 
         # login the user using session
