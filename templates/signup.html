@@ -27,7 +27,11 @@
             <button type="submit">Submit</button>
             <a href="{{ url_for('login') }}">Login</a>
         </form>
-        <span class="error-message">Error 404</span>
+        {% if errorMessage != "" %}
+            {% block content %}
+            <span class="error-message">{{ errorMessage }}</span>
+            {% endblock content %}
+        {% endif %}
     </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
