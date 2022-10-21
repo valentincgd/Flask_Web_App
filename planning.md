@@ -1,25 +1,28 @@
 TO DO:
 
 Pages:
-
 - Login
-    EMAIL
-    PASSWORD
+    - EMAIL
+    - PASSWORD
 
 - Register
-    USERNAME
-    EMAIL
-    PASSWORD
+    - USERNAME
+    - EMAIL
+    - PASSWORD
 
 - Logout
-    ez 
+    - ez
 
 - Home
-    AFFICHER LES RECETTES
-
+    - AFFICHER LES RECETTES
 
 - DB:
-    Users:
-        EMAIL
-        PASSWORD
-        USERNAME
+    - Users:
+        - EMAIL
+        - PASSWORD
+        - USERNAME
+
+Objectifs secondaires :
+
+- Page des recettes individuelles -> Slug
+- Barre de recherche de recette
