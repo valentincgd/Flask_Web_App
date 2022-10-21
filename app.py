@@ -46,7 +46,9 @@ def signup():
             return "user already registered"
 
         # hash the password
-        pwhash = request.form.get("password")# generate_password_hash(request.form.get("password"))
+        pwhash = request.form.get(
+            "password"
+        )  # generate_password_hash(request.form.get("password"))
 
         # insert the row
         c.execute(
