@@ -62,7 +62,9 @@ def signup():
         conn.commit()
 
         # return success
-        return "registered successfully!"
+        session["user_id"] = request.form.get("email")
+
+        return redirect("/")
     else:
         return render_template("signup.html")
 
