@@ -8,15 +8,21 @@ from pathlib import Path
 def init_db():
     db = sqlite3.connect("MarmiFlask.db")
     db.row_factory = sqlite3.Row
-    db.executescript(path("MarmiFlask.sql").readText())
+    db.executescript(Path("MarmiFlask.sql").read_text())
 
 
-conn = sqlite3.connect("db.sqlite3", check_same_thread=False)
+if not Path("MarmiFlask.db").exists():
+    init_db()
+
+conn = sqlite3.connect("MarmiFlask.db", check_same_thread=False)
 c = conn.cursor()
 
 app = Flask(__name__)
 
-app.config["SECRET_KEY"] = "9af5477e9770cc80f836ba957033432486844f49e24a62c79f2df6cca073a27a"
+app.config[
+    "SECRET_KEY"
+] = "9af5477e9770cc80f836ba957033432486844f49e24a62c79f2df6cca073a27a"
+
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -40,7 +46,9 @@ def signup():
             return "user already registered"
 
             # hash the password
-            pwhash = generate_password_hash(request.form.get("password"), method="pbkdf2:sha256", salt_length=8)
+            pwhash = generate_password_hash(
+                request.form.get("password"), method="pbkdf2:sha256", salt_length=8
+            )
 
         # insert the row
         c.execute(
