@@ -27,6 +27,31 @@ header{
         text-decoration: none;
         color: var(--background);
     }
+    .logOut{
+        .block{
+            width: 25px;
+            height: 25px;
+            border: 2px var(--background) solid;
+            border-radius: 8px;
+            position: relative;
+            .arrow{
+                color: var(--background);
+                position: absolute;
+                top: 0px;
+                left: 60%;
+                transform: translate(50% 50%);
+                font-size: 20px;
+                transition: 0.3s;
+                ion-icon{
+                    background: var(--select);
+                }
+            }
+            &:active .arrow{
+                left: 90%;
+                transition: 0.1s;
+            }
+        }
+    }
 }
 
 .container{

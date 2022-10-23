@@ -36,6 +36,36 @@ header a {
   color: var(--background);
 }
 
+header .logOut .block {
+  width: 25px;
+  height: 25px;
+  border: 2px var(--background) solid;
+  border-radius: 8px;
+  position: relative;
+}
+
+header .logOut .block .arrow {
+  color: var(--background);
+  position: absolute;
+  top: 0px;
+  left: 60%;
+  -webkit-transform: translate(50% 50%);
+          transform: translate(50% 50%);
+  font-size: 20px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+header .logOut .block .arrow ion-icon {
+  background: var(--select);
+}
+
+header .logOut .block:active .arrow {
+  left: 90%;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+}
+
 .container {
   width: 100%;
   display: -webkit-box;
