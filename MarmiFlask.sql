@@ -1,37 +1,37 @@
+PRAGMA FOREIGN_KEY = ON;
+PRAGMA ENCODING = "UTF-8";
+
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS recipes;
 CREATE TABLE users (
-    user_mail TEXT UNIQUE NOT NULL PRIMARY KEY,
-    user_username TEXT UNIQUE NOT NULL,
-    user_password TEXT NOT NULL
+    user_mail VARCHAR(255) UNIQUE NOT NULL PRIMARY KEY,
+    user_username VARCHAR(255) UNIQUE NOT NULL,
+    user_password VARCHAR(255) NOT NULL
 );
 CREATE TABLE recipes (
     recipe_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    recipe_author INTEGER NOT NULL,
-    recipe_name TEXT NOT NULL,
+    recipe_author VARCHAR(255) NOT NULL,
+    recipe_name VARCHAR(255) NOT NULL,
     body TEXT NOT NULL,
     FOREIGN KEY (recipe_author) REFERENCES users (user_username)
 );
 INSERT INTO "users"
-VALUES ('j@j.j', 'j', 'j');
-INSERT INTO "recipes"
-VALUES (
-        1,
-        'j',
-        'Fondant au chocolat',
-        'Faire fondre le chocolat dans le bol'
-    );
-INSERT INTO "recipes"
-VALUES (
-        2,
-        'j',
-        'Crêpes',
-        'De la pate dans la casserole je crois'
-    );
-INSERT INTO "recipes"
-VALUES (
-        3,
-        'j',
-        'Tiramisu',
-        'Mettre gateau dans café et crème et frigo et manger'
-    );
+VALUES ('j@j.j', 'jérém', 'j');
+INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
+(
+    'j',
+    'Crêpes',
+    'De la pate dans la casserole je crois'
+);
+INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
+(
+    'j',
+    'Tiramisu',
+    'Test'
+);
+INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
+(
+    'j',
+    'Moules frites',
+    'Test'
+);

@@ -35,14 +35,29 @@ header{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-bottom: 50px;
     .block{
-        margin-top: 20px;
+        margin-top: 40px;
         width: 80%;
         background: var(--background);
-        filter:drop-shadow(0 0 0.75rem var(--shadow));
+        filter:drop-shadow(0 0 0.3rem var(--shadow));
         padding: 30px;
         border-radius: 10px;
-
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.3s;
+        &:hover{
+            filter:drop-shadow(0 0 0.5rem var(--txt));
+            transition: 0.3s;
+        }
+        .img{
+            img{
+                width: 100px;
+            }
+        }
+        .infos{
+            margin-left: 20px;
+        }
     }
-
 }

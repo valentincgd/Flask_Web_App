@@ -4,6 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
 from pathlib import Path
 
+# coding: UTF-8
 
 def init_db():
     db = sqlite3.connect("MarmiFlask.db")
@@ -92,7 +93,7 @@ def login():
             return render_template("login.html", errorMessage="You didn't register.")
 
         # check the password is same to password hash
-        pwhash = user[0][1]
+        pwhash = user[0][2]
         #        if check_password_hash(pwhash, request.form.get("password")) == False:
 
         if pwhash != request.form.get("password"):
