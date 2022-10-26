@@ -12,7 +12,7 @@
 </head>
 <body>
   <header>
-    <h2>MarmiFlask</h2>
+    <h2><a href="/">MarmiFlask</a></h2>
     <a href="/logout" class="logOut">
       <div class="block">
         <div class="arrow">
@@ -25,7 +25,7 @@
   <div class="container">
 
     {% for i in recipes %}
-    <div class="block">
+    <a href="/recipe/{{ i[0] }}" class="block">
       <div class="img">
         <img src="{{ url_for('static', filename='img/noimage.png') }}" alt="">
       </div>
@@ -38,7 +38,7 @@
           {{ i[3] }}
         </p>
       </div>
-    </div>
+    </a>
     {% endfor %}
 
   </div>

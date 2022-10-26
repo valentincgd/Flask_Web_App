@@ -122,6 +122,16 @@ def logout():
     session.clear()
     return redirect(url_for("login"))
 
+@app.route("/recipe/<int:recipe_id>")
+def recipe(recipe_id):
+    recipe = c.execute("SELECT * FROM recipes WHERE recipe_id = :recipe_id",
+            {"recipe_id": recipe_id}
+    ).fetchall()
+    ingre = c.execute("SELECT ingredients.ingre_name, ingredients.ingre_img FROM recipe_ingre INNER JOIN ingredients ON ingredients.ingre_id = recipe_ingre.ingre_id WHERE recipe_id = :recipe_id",
+            {"recipe_id": recipe_id}
+    ).fetchall()
+    return render_template("recipe.html", recipes = recipe, ingres = ingre)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

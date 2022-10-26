@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h2><a href="/">MarmiFlask</a></h2>
+    </header>
+
+    <div class="container">
+
+        {% for i in recipes %}
+        <div class="infosRecipe">
+
+            <div class="img">
+                <img src="../static/img/noimage.png" alt="">
+            </div>
+
+            <div class="infos">
+                <h3>{{ i[2] }}</h3>
+                <span>{{ i[1] }}</span>
+                <p>{{ i[3] }}</p>
+            </div>
+
+        </div>
+        {% endfor %}
+
+        <div class="listRecipe">
+            <div class="list">
+                <h3>Ingrédients</h3>
+                <ul>
+                    {% for i in ingres %}
+                    <li>
+                        <img src="{{ i[1] }}" alt="">
+                        <span>{{ i[0] }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -15,12 +15,25 @@ CREATE TABLE recipes (
     body TEXT NOT NULL,
     FOREIGN KEY (recipe_author) REFERENCES users (user_username)
 );
+CREATE TABLE ingredients (
+    ingre_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ingre_name VARCHAR(255) NOT NULL,
+    ingre_img VARCHAR(255) NOT NULL
+);
+CREATE TABLE recipe_ingre(
+    recipe_ingre_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ingre_id INTEGER NOT NULL,
+    recipe_id INTEGER NOT NULL,
+    qt INTEGER,
+    FOREIGN KEY (ingre_id) REFERENCES ingredients (ingre_id),
+    FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id)
+);
 INSERT INTO "users"
 VALUES ('j@j.j', 'jérém', 'j');
 INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
 (
     'j',
-    'Crêpes',
+    'Charlotte',
     'De la pate dans la casserole je crois'
 );
 INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
@@ -34,4 +47,15 @@ INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
     'j',
     'Moules frites',
     'Test'
+);
+INSERT INTO "recipe_ingre" ('ingre_id', 'recipe_id', 'qt') VALUES
+(
+    1,
+    1,
+    3
+);
+INSERT INTO "ingredients" ('ingre_name', 'ingre_img') VALUES
+(
+    "carottes",
+    "/static/img/carottes.png"
 );

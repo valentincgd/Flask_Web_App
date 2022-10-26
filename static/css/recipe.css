@@ -66,8 +66,27 @@ header .logOut .block:active .arrow {
   transition: 0.1s;
 }
 
-.container {
-  width: 100%;
+.container .infosRecipe {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: calc(100% - 15%);
+  height: auto;
+  margin-left: 15%;
+}
+
+.container .infosRecipe .infos {
+  margin-left: 20px;
+}
+
+.container .infosRecipe .infos p {
+  width: 90%;
+}
+
+.container .listRecipe {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -75,48 +94,76 @@ header .logOut .block:active .arrow {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding-bottom: 50px;
+  padding: 10px;
+  width: calc(100% - 20px);
+  height: auto;
 }
 
-.container .block {
-  text-decoration: none;
-  color: var(--txt);
-  margin-top: 40px;
-  width: 80%;
-  background: var(--background);
-  -webkit-filter: drop-shadow(0 0 0.3rem var(--shadow));
-          filter: drop-shadow(0 0 0.3rem var(--shadow));
-  padding: 30px;
-  border-radius: 10px;
+.container .listRecipe .list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+  width: 60%;
+}
+
+.container .listRecipe .list h3 {
+  font-size: 40px;
+  padding: 0;
+  margin: 0;
+}
+
+.container .listRecipe .list ul {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[5];
+      grid-template-columns: repeat(5, 1fr);
+}
+
+.container .listRecipe .list ul li {
+  padding: 5px;
+  list-style-type: none;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  cursor: pointer;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background: var(--background);
+  border-radius: 10px;
+  -webkit-filter: drop-shadow(0 0 0.3rem var(--shadow));
+          filter: drop-shadow(0 0 0.3rem var(--shadow));
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
-.container .block:hover {
-  -webkit-filter: drop-shadow(0 0 0.5rem var(--txt));
-          filter: drop-shadow(0 0 0.5rem var(--txt));
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
+.container .listRecipe .list ul li img {
+  width: 150px;
 }
 
-.container .block .img img {
-  width: 100px;
+@media screen and (max-width: 400px) {
+  .container .infosRecipe {
+    margin-left: 0px;
+  }
+  img {
+    width: 100px;
+  }
 }
-
-.container .block .infos {
-  margin-left: 20px;
-}
-/*# sourceMappingURL=index.css.map */
+/*# sourceMappingURL=recipe.css.map */
