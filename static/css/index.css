@@ -60,6 +60,8 @@ header .logOut .block:active .arrow {
   padding-bottom: 50px;
 }
 .container .block {
+  text-decoration: none;
+  color: var(--txt);
   margin-top: 40px;
   width: 80%;
   background: var(--background);

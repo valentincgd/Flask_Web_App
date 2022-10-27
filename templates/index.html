@@ -9,7 +9,7 @@
   <div class="container">
 
     {% for i in recipes %}
-    <div class="block">
+    <a href="/recipe/{{ i[0] }}" class="block">
       <div class="img">
         <img src="{{ url_for('static', filename='img/noimage.png') }}" alt="">
       </div>
@@ -22,7 +22,7 @@
           {{ i[3] }}
         </p>
       </div>
-    </div>
+    </a>
     {% endfor %}
 
   </div>
