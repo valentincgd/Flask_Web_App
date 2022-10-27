@@ -6,6 +6,7 @@ from pathlib import Path
 
 # coding: UTF-8
 
+
 def init_db():
     db = sqlite3.connect("MarmiFlask.db")
     db.row_factory = sqlite3.Row
@@ -122,25 +123,25 @@ def logout():
     session.clear()
     return redirect(url_for("login"))
 
+
 @app.route("/recipe/<int:recipe_id>")
 def recipe(recipe_id):
-    recipe = c.execute("SELECT * FROM recipes WHERE recipe_id = :recipe_id",
-            {"recipe_id": recipe_id}
+    recipe = c.execute(
+        "SELECT * FROM recipes WHERE recipe_id = :recipe_id", {"recipe_id": recipe_id}
     ).fetchall()
-    ingre = c.execute("SELECT ingredients.ingre_name, ingredients.ingre_img, recipe_ingre.qt FROM recipe_ingre INNER JOIN ingredients ON ingredients.ingre_id = recipe_ingre.ingre_id WHERE recipe_id = :recipe_id",
-            {"recipe_id": recipe_id}
+    ingre = c.execute(
+        "SELECT ingredients.ingre_name, ingredients.ingre_img, recipe_ingre.qt FROM recipe_ingre INNER JOIN ingredients ON ingredients.ingre_id = recipe_ingre.ingre_id WHERE recipe_id = :recipe_id",
+        {"recipe_id": recipe_id},
     ).fetchall()
-    return render_template("recipe.html", recipes = recipe, ingres = ingre)
+    return render_template("recipe.html", recipes=recipe, ingres=ingre)
+
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
     if request.method == "POST":
         # check if the form is valid
 
-        if (
-            not request.form.get("recipe_name")
-            or not request.form.get("instructions")
-        ):
+        if not request.form.get("recipe_name") or not request.form.get("recipe_body"):
             return render_template(
                 "add.html", errorMessage="Please fill out all fields."
             )
@@ -160,7 +161,7 @@ def add():
         session["user_id"]
 
         username = c.execute(
-            "SELECT user_username FROM user WHERE user_mail=:user_mail",
+            "SELECT user_username FROM users WHERE user_mail=:user_mail",
             {"user_mail": session["user_id"]},
         ).fetchall()
 
@@ -168,9 +169,9 @@ def add():
         c.execute(
             "INSERT INTO recipes ('recipe_author', 'recipe_name', 'body') VALUES (:username, :title,:body)",
             {
-                "username": username,
+                "username": username[0][0],
                 "title": request.form.get("recipe_name"),
-                "username": request.form.get("recipe_body"),
+                "body": request.form.get("recipe_body"),
             },
         )
         conn.commit()
@@ -180,8 +181,7 @@ def add():
 
         return redirect("/")
     else:
-        return render_template("add.html", errorMessage="")
-
+        return render_template("add.html", errorMessage="non")
 
 
 if __name__ == "__main__":
