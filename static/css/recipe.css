@@ -152,10 +152,15 @@ header .logOut .block:active .arrow {
           filter: drop-shadow(0 0 0.3rem var(--shadow));
   margin-left: 5px;
   margin-right: 5px;
+  position: relative;
 }
 
 .container .listRecipe .list ul li img {
   width: 150px;
+}
+
+.container .listRecipe .list ul li .nbIngre span {
+  font-size: 20px;
 }
 
 @media screen and (max-width: 400px) {

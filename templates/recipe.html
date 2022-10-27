@@ -39,8 +39,15 @@
                 <ul>
                     {% for i in ingres %}
                     <li>
+                        {% if i[1] == "" %}
+                        <img src="../static/img/noimage.png" alt="">
+                        {% else %}
                         <img src="{{ i[1] }}" alt="">
+                        {% endif %}
                         <span>{{ i[0] }}</span>
+                        <div class="nbIngre">
+                            <span>{{ i[2] }}</span>
+                        </div>
                     </li>
                     {% endfor %}
                 </ul>

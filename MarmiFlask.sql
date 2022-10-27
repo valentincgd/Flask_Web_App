@@ -50,12 +50,19 @@ INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
 );
 INSERT INTO "recipe_ingre" ('ingre_id', 'recipe_id', 'qt') VALUES
 (
-    1,
+    2,
     1,
     3
+),(
+    1,
+    1,
+    2
 );
 INSERT INTO "ingredients" ('ingre_name', 'ingre_img') VALUES
 (
     "carottes",
     "/static/img/carottes.png"
+),(
+    "farine",
+    "/static/img/farine.png"
 );

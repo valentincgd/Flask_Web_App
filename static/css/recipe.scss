@@ -104,8 +104,14 @@ header{
                     filter:drop-shadow(0 0 0.3rem var(--shadow));
                     margin-left: 5px;
                     margin-right: 5px;
+                    position: relative;
                     img{
                         width: 150px;
+                    }
+                    .nbIngre{
+                        span{
+                            font-size: 20px;
+                        }
                     }
                 }
             }
