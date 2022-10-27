@@ -2,76 +2,48 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: Kanit, 'Montserrat', sans-serif, 'Courier New', Courier, monospace;
+  font-family: Kanit, "Montserrat", sans-serif, "Courier New", Courier, monospace;
   color: var(--txt);
 }
 
 .container {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: column;
+  align-items: center;
   padding-top: 100px;
   width: 100%;
   height: calc(100vh - 100px);
 }
-
 .container form {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background: var(--background);
-  -webkit-filter: drop-shadow(0 0 0.75rem var(--shadow));
-          filter: drop-shadow(0 0 0.75rem var(--shadow));
+  filter: drop-shadow(0 0 0.75rem var(--shadow));
   padding: 30px;
   border-radius: 10px;
 }
-
 .container form .block {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   margin-bottom: 15px;
   position: relative;
 }
-
 .container form .block label {
   position: absolute;
   top: 12px;
   left: 10px;
-  -webkit-transition: .2s;
-  transition: .2s;
+  transition: 0.2s;
   color: gray;
   cursor: text;
 }
-
 .container form .block label.focus {
   top: -7px;
   left: 5px;
   color: var(--txt);
   cursor: default;
 }
-
 .container form .block input {
   width: 200px;
   padding: 10px;
@@ -82,20 +54,16 @@ body {
   outline: none;
   margin-top: 5px;
 }
-
 .container form .block input:focus {
   border-color: var(--select);
 }
-
 .container form .block input:focus + label {
   top: -7px;
   left: 5px;
-  -webkit-transition: .2s;
-  transition: .2s;
+  transition: 0.2s;
   color: var(--txt);
   cursor: default;
 }
-
 .container form button[type=submit] {
   margin-top: 30px;
   width: 200px;
@@ -105,39 +73,32 @@ body {
   color: var(--background);
   border: none;
   border-radius: 2px;
-  font-family: Kanit, 'Montserrat', sans-serif, 'Courier New', Courier, monospace;
+  font-family: Kanit, "Montserrat", sans-serif, "Courier New", Courier, monospace;
   font-size: 15px;
 }
-
 .container form button[type=submit]:hover {
-  -webkit-filter: brightness(0.8);
-          filter: brightness(0.8);
+  filter: brightness(0.8);
 }
-
 .container form a {
   text-align: center;
   margin-top: 10px;
   width: 180px;
   padding: 10px;
   cursor: pointer;
-  background: #e7e7e7;
+  background: rgb(231, 231, 231);
   border: none;
   border-radius: 2px;
   text-decoration: none;
   color: black;
   font-size: 15px;
 }
-
 .container form a:hover {
-  -webkit-filter: brightness(0.8);
-          filter: brightness(0.8);
+  filter: brightness(0.8);
 }
-
 .container span {
   margin-top: 30px;
   color: var(--error);
 }
-
 .container .viewPass {
   color: var(--txt);
   cursor: pointer;
@@ -145,8 +106,6 @@ body {
   top: -15px;
   right: 0;
 }
-
 .container .viewPass ion-icon {
   cursor: pointer;
-}
-/*# sourceMappingURL=log.css.map */
+}/*# sourceMappingURL=log.css.map */
