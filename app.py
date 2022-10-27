@@ -122,6 +122,57 @@ def logout():
     session.clear()
     return redirect(url_for("login"))
 
+@app.route("/add", methods=["GET", "POST"])
+def add():
+    if request.method == "POST":
+        # check if the form is valid
+
+        if (
+            not request.form.get("recipe_name")
+            or not request.form.get("instructions")
+        ):
+            return render_template(
+                "add.html", errorMessage="Please fill out all fields."
+            )
+
+        # check if recipe exist in the database
+        exist = c.execute(
+            "SELECT * FROM recipes WHERE recipe_name=:recipe_name",
+            {"recipe_name": request.form.get("recipe_name")},
+        ).fetchall()
+
+        if len(exist) != 0:
+            return render_template(
+                "add.html", errorMessage="This recipe already exists"
+            )
+
+        # get the username of connected user
+        session["user_id"]
+
+        username = c.execute(
+            "SELECT user_username FROM user WHERE user_mail=:user_mail",
+            {"user_mail": session["user_id"]},
+        ).fetchall()
+
+        # insert the row
+        c.execute(
+            "INSERT INTO recipes ('recipe_author', 'recipe_name', 'body') VALUES (:username, :title,:body)",
+            {
+                "username": username,
+                "title": request.form.get("recipe_name"),
+                "username": request.form.get("recipe_body"),
+            },
+        )
+        conn.commit()
+
+        # return success
+        session["user_id"] = request.form.get("email")
+
+        return redirect("/")
+    else:
+        return render_template("add.html", errorMessage="")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
