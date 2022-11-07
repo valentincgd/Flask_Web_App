@@ -10,7 +10,7 @@ from pathlib import Path
 def init_db():
     db = sqlite3.connect("MarmiFlask.db")
     db.row_factory = sqlite3.Row
-    db.executescript(Path("MarmiFlask.sql").read_text())
+    db.executescript(Path("MarmiFlask.sql").read_text(encoding="utf-8"))
 
 
 if not Path("MarmiFlask.db").exists():
