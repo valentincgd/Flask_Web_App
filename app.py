@@ -189,7 +189,27 @@ def add():
             )
             conn.commit()
 
+            newRecipId = c.execute(
+                "SELECT MAX(recipe_id) FROM recipes WHERE 1",
+            ).fetchall()
+
+            newRecipId = newRecipId[0][0]
+
+            for i in request.form:
+                if "check_" in i:
+                    cmdSql = "INSERT INTO recipe_ingre ('ingre_id', 'recipe_id', 'qt') VALUES (:ingre, :recipe,:qt)"
+                    c.execute(
+                        cmdSql,
+                        {
+                            "ingre": request.form.get(i),
+                            "recipe": newRecipId,
+                            "qt": 1,
+                        },
+                    )
+                    conn.commit()
+
             return redirect("/")
+
         else:
 
             cmdSql = "SELECT * FROM ingredients WHERE 1"
