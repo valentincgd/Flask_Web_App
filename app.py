@@ -55,14 +55,21 @@ def signup():
 
         # insert the row
         sqlCmd = "INSERT INTO users (user_mail, user_password,user_username) VALUES (:email, :password,:username)"
-        c.execute(
-            sqlCmd,
-            {
-                "email": email,
-                "password": pwhash,
-                "username": username,
-            },
-        )
+
+        try:
+            c.execute(
+                sqlCmd,
+                {
+                    "email": email,
+                    "password": pwhash,
+                    "username": username,
+                },
+            )
+        except sqlite3.IntegrityError:
+            return render_template(
+                "signup.html", errorMessage="Username already exist."
+            )
+
         conn.commit()
 
         # return success
