@@ -28,8 +28,7 @@ CREATE TABLE recipe_ingre(
     FOREIGN KEY (ingre_id) REFERENCES ingredients (ingre_id),
     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id)
 );
-INSERT INTO "users"
-VALUES ('j@j.j', 'jérém', 'j');
+
 INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
 (
     'jérém',
