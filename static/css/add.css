@@ -39,3 +39,48 @@ body .add-form textarea[type=submit]:hover, body .add-form select[type=submit]:h
 body .add-form select {
   width: 21rem;
 }/*# sourceMappingURL=add.css.map */
+
+body .add-form .listIngre {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 20rem;
+}
+
+body .add-form .listIngre .ingre {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  margin-top: 2px;
+}
+
+body .add-form .listIngre .ingre input[type=checkbox] {
+  width: auto;
+  margin-top: 5px;
+}
+
+body .add-form .listIngre .ingre input[type=number] {
+  width: 5rem;
+}
+
+body .add-form .listIngre .ingre label {
+  margin-left: 5px;
+}
+/*# sourceMappingURL=add.css.map */

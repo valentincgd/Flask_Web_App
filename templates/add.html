@@ -19,11 +19,20 @@
           placeholder="Contenu de la recette"
           name="recipe_body"
         ></textarea>
-        <select name="" id="" multiple>
+        <div class="listIngre">
           {% for i in ingres %}
-          <option value="{{ i[0] }}">{{ i[1] }}</option>
+          <div class="ingre">
+            <div class="check">
+              <input type="checkbox" name="check_{{ i[0] }}" id="check{{ i[0] }}" value="{{ i[0] }}">
+              <label for="check{{ i[0] }}">{{ i[1] }}</label>
+            </div>
+            <div class="qt">
+              <label for="qt_{{ i[0] }}">Quantité:</label>
+              <input type="number" id="qt_{{ i[0] }}" name="qt_{{ i[0] }}">
+            </div>
+          </div>
           {% endfor %}
-        </select>
+        </div>
         <input type="submit" value="Ajouter" />
       </form>
       {% if errorMessage != "" %} {% block content %}
