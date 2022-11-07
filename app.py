@@ -7,18 +7,15 @@ from pathlib import Path
 # coding: UTF-8
 
 
-def init_db():
+if not Path("MarmiFlask.db").exists():
     db = sqlite3.connect("MarmiFlask.db")
     db.row_factory = sqlite3.Row
     db.executescript(Path("MarmiFlask.sql").read_text(encoding="utf-8"))
 
 
-if not Path("MarmiFlask.db").exists():
-    init_db()
+def log_database():
+    return sqlite3.connect("MarmiFlask.db", check_same_thread=False)
 
-
-conn = sqlite3.connect("MarmiFlask.db", check_same_thread=False)
-c = conn.cursor()
 
 app = Flask(__name__)
 
@@ -30,28 +27,16 @@ app.config[
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
+        conn = log_database()
+        c = conn.cursor()
 
         # check if the form is valid
-        email = request.form.get("email")
-        password = request.form.get("password")
-        username = request.form.get("username")
-
-        formInformationIsNotComplet = not email or not password or not username
-
-        if formInformationIsNotComplet:
-            errorMessage = "Please fill out all fields."
-            return render_template("signup.html", errorMessage=errorMessage)
-
-        # check if email exist in the database
-        sqlCmd = "SELECT * FROM users WHERE user_mail=:email"
-        exist = c.execute(sqlCmd, {"email": email}).fetchall()
-
-        if len(exist) != 0:
-            errorMessage = "Email already registered."
-            return render_template("signup.html", errorMessage=errorMessage)
+        email = request.form["email"]
+        password = request.form["password"]
+        username = request.form["username"]
 
         # hash the password
-        pwhash = generate_password_hash(request.form.get("password"))
+        pwhash = generate_password_hash(password)
 
         # insert the row
         sqlCmd = "INSERT INTO users (user_mail, user_password,user_username) VALUES (:email, :password,:username)"
@@ -67,7 +52,7 @@ def signup():
             )
         except sqlite3.IntegrityError:
             return render_template(
-                "signup.html", errorMessage="Username already exist."
+                "signup.html", error_message="Username or email already exist."
             )
 
         conn.commit()
@@ -77,38 +62,36 @@ def signup():
 
         return redirect("/")
     else:
-        return render_template("signup.html", errorMessage="")
+        return render_template("signup.html", error_message="")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
 
     if request.method == "POST":
+        conn = log_database()
+        c = conn.cursor()
 
-        email = request.form.get("email")
-        password = request.form.get("password")
-
-        # check the form is valid
-        if not email or not password:
-            errorMessage = "Please fill out all required fields."
-            return render_template("login.html", errorMessage=errorMessage)
+        email = request.form["email"]
+        password = request.form["password"]
 
         # check if email exist in the database
         sqlCmd = "SELECT * FROM users WHERE user_mail=:email"
         userInformation = c.execute(
             sqlCmd,
             {"email": email},
-        ).fetchall()
+        ).fetchone()
 
         if len(userInformation) != 1:
-            errorMessage = "You didn't register."
-            return render_template("login.html", errorMessage=errorMessage)
+            error_message = "You didn't register."
+            return render_template("login.html", error_message=error_message)
 
         # check the password is same to password hash
-        pwhash = userInformation[0][2]
+        pwhash = userInformation[2]
+
         if check_password_hash(pwhash, password) == False:
-            errorMessage = "Wrong password."
-            return render_template("login.html", errorMessage=errorMessage)
+            error_message = "Wrong password."
+            return render_template("login.html", error_message=error_message)
 
         # login the user using session
 
@@ -118,15 +101,18 @@ def login():
         return redirect("/")
 
     else:
-        return render_template("login.html", errorMessage="")
+        return render_template("login.html", error_message="")
 
 
 @app.route("/")
 def index():
     if "user_id" in session:
+        conn = log_database()
+        c = conn.cursor()
+
         recipes = c.execute("SELECT * FROM recipes").fetchall()
         return render_template("index.html", recipes=recipes)
-    return redirect("/login")
+    return redirect(url_for("login"))
 
 
 @app.route("/logout")
@@ -138,6 +124,9 @@ def logout():
 @app.route("/recipe/<int:recipe_id>", methods=["GET", "POST"])
 def recipe(recipe_id):
     if "user_id" in session:
+        conn = log_database()
+        c = conn.cursor()
+
         if request.method == "GET":
 
             fetchAllRecipes = "SELECT re.recipe_id, re.recipe_author, re.recipe_name, re.body, ROUND(AVG(ra.rating)) FROM recipes re INNER JOIN ratings ra ON re.recipe_id = ra.rating_recipe_id WHERE re.recipe_id = :recipe_id"
@@ -171,16 +160,18 @@ def recipe(recipe_id):
 @app.route("/add", methods=["GET", "POST"])
 def add():
     if "user_id" in session:
+        conn = log_database()
+        c = conn.cursor()
 
         if request.method == "POST":
             # check if the form is valid
 
-            recipe_name = request.form.get("recipe_name")
-            recipe_body = request.form.get("recipe_body")
+            recipe_name = request.form["recipe_name"]
+            recipe_body = request.form["recipe_body"]
 
             if not recipe_name or not recipe_body:
-                errorMessage = "Please fill out all fields."
-                return render_template("add.html", errorMessage=errorMessage)
+                error_message = "Please fill out all fields."
+                return render_template("add.html", error_message=error_message)
 
             # check if recipe exist in the database
             cmdSql = "SELECT * FROM recipes WHERE recipe_name=:recipe_name"
@@ -190,8 +181,8 @@ def add():
             ).fetchall()
 
             if len(exist) != 0:
-                errorMessage = "This recipe already exists"
-                return render_template("add.html", errorMessage=errorMessage)
+                error_message = "This recipe already exists"
+                return render_template("add.html", error_message=error_message)
 
             # get the username of connected user
             cmdSql = "SELECT user_username FROM users WHERE user_mail=:user_mail"
@@ -242,7 +233,6 @@ def add():
 
                 increment += 1
 
-
             return redirect("/")
 
         else:
@@ -250,9 +240,9 @@ def add():
             cmdSql = "SELECT * FROM ingredients WHERE 1"
             ingres = c.execute(cmdSql).fetchall()
 
-            return render_template("add.html", errorMessage="", ingres=ingres)
+            return render_template("add.html", error_message="", ingres=ingres)
     else:
-        return render_template("login.html", errorMessage="")
+        return render_template("login.html", error_message="")
 
 
 if __name__ == "__main__":
