@@ -111,7 +111,7 @@ def index():
         c = conn.cursor()
 
         recipes = c.execute("SELECT * FROM recipes").fetchall()
-        rating = c.execute("SELECT rating_recipe_id, rating_author, AVG(rating) FROM ratings GROUP BY rating_recipe_id").fetchall()
+        rating = c.execute("SELECT rating_recipe_id, rating_author, ROUND(AVG(rating)) FROM ratings GROUP BY rating_recipe_id").fetchall()
         return render_template("index.html", recipes=recipes, rating=rating)
     return redirect(url_for("login"))
 
