@@ -71,17 +71,23 @@ body .add-form .listIngre .ingre {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 100%;
+  margin-top: 2px;
 }
 
 body .add-form .listIngre .ingre input[type=checkbox] {
   width: auto;
   margin-top: 5px;
+}
+
+body .add-form .listIngre .ingre input[type=number] {
+  width: 5rem;
 }
 
 body .add-form .listIngre .ingre label {
