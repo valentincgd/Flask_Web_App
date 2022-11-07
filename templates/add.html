@@ -35,8 +35,8 @@
         </div>
         <input type="submit" value="Ajouter" />
       </form>
-      {% if errorMessage != "" %} {% block content %}
-      <span class="error-message">{{ errorMessage }}</span>
+      {% if error_message != "" %} {% block content %}
+      <span class="error-message">{{ error_message }}</span>
       {% endblock content %} {% endif %}
     </div>
   </body>

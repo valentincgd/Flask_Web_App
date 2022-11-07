@@ -26,9 +26,9 @@
             <button type="submit">Submit</button>
             <a href="{{ url_for('signup') }}">Signup</a>
         </form>
-        {% if errorMessage != "" %}
+        {% if error_message != "" %}
             {% block content %}
-            <span class="error-message">{{ errorMessage }}</span>
+            <span class="error-message">{{ error_message }}</span>
             {% endblock content %}
         {% endif %}
     </div>
