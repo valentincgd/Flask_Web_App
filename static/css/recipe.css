@@ -2,7 +2,7 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: Kanit, 'Montserrat', sans-serif, 'Courier New', Courier, monospace;
+  font-family: Kanit, "Montserrat", sans-serif, "Courier New", Courier, monospace;
   color: var(--txt);
 }
 
@@ -12,30 +12,21 @@ header {
   width: calc(100% - 40px);
   height: 70px;
   background: var(--select);
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
   padding-left: 20px;
   padding-right: 20px;
 }
-
 header h2 {
   padding: 0;
   margin: 0;
   color: var(--background);
 }
-
 header a {
   text-decoration: none;
   color: var(--background);
 }
-
 header .logOut .block {
   width: 25px;
   height: 25px;
@@ -43,122 +34,102 @@ header .logOut .block {
   border-radius: 8px;
   position: relative;
 }
-
 header .logOut .block .arrow {
   color: var(--background);
   position: absolute;
   top: 0px;
   left: 60%;
-  -webkit-transform: translate(50% 50%);
-          transform: translate(50% 50%);
+  transform: translate(50% 50%);
   font-size: 20px;
-  -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-
 header .logOut .block .arrow ion-icon {
   background: var(--select);
 }
-
 header .logOut .block:active .arrow {
   left: 90%;
-  -webkit-transition: 0.1s;
   transition: 0.1s;
 }
 
 .container .infosRecipe {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: calc(100% - 15%);
+  align-items: center;
+  width: 85%;
   height: auto;
   margin-left: 15%;
 }
-
 .container .infosRecipe .infos {
   margin-left: 20px;
 }
-
 .container .infosRecipe .infos p {
   width: 90%;
 }
-
-.container .listRecipe {
-  display: -webkit-box;
-  display: -ms-flexbox;
+.container .infosRecipe .rating {
+  font-size: 1.5rem;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: row-reverse;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.container .infosRecipe .rating button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+}
+.container .infosRecipe .rating .yellow {
+  color: rgb(255, 221, 0);
+}
+.container .infosRecipe .rating .grey {
+  color: #000000;
+}
+.container .infosRecipe .rating:hover button {
+  color: #000000;
+}
+.container .infosRecipe .rating button:hover, .container .infosRecipe .rating button:hover ~ button {
+  color: rgb(255, 187, 0);
+}
+.container .listRecipe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 10px;
   width: calc(100% - 20px);
   height: auto;
 }
-
 .container .listRecipe .list {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: start;
+  flex-direction: column;
+  justify-content: start;
   width: 60%;
 }
-
 .container .listRecipe .list h3 {
   font-size: 40px;
   padding: 0;
   margin: 0;
 }
-
 .container .listRecipe .list ul {
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[5];
-      grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 }
-
 .container .listRecipe .list ul li {
   padding: 5px;
   list-style-type: none;
   margin-bottom: 10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   background: var(--background);
   border-radius: 10px;
-  -webkit-filter: drop-shadow(0 0 0.3rem var(--shadow));
-          filter: drop-shadow(0 0 0.3rem var(--shadow));
+  filter: drop-shadow(0 0 0.3rem var(--shadow));
   margin-left: 5px;
   margin-right: 5px;
   position: relative;
 }
-
 .container .listRecipe .list ul li img {
   width: 150px;
 }
-
 .container .listRecipe .list ul li .nbIngre span {
   font-size: 20px;
 }
@@ -170,5 +141,4 @@ header .logOut .block:active .arrow {
   img {
     width: 100px;
   }
-}
-/*# sourceMappingURL=recipe.css.map */
+}/*# sourceMappingURL=recipe.css.map */
