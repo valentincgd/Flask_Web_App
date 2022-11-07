@@ -24,7 +24,7 @@ body .add-form p {
 }
 
 body .add-form input,
-body .add-form textarea, body .add-form select {
+body .add-form textarea {
   font-family: Kanit, 'Montserrat', sans-serif, 'Courier New', Courier, monospace;
   border: 1px solid var(--shadow);
   border-radius: 0.5rem;
@@ -35,7 +35,7 @@ body .add-form textarea, body .add-form select {
 }
 
 body .add-form input[type="submit"],
-body .add-form textarea[type="submit"], body .add-form select[type="submit"] {
+body .add-form textarea[type="submit"] {
   width: -webkit-min-content;
   width: -moz-min-content;
   width: min-content;
@@ -44,13 +44,47 @@ body .add-form textarea[type="submit"], body .add-form select[type="submit"] {
 }
 
 body .add-form input[type="submit"]:hover,
-body .add-form textarea[type="submit"]:hover, body .add-form select[type="submit"]:hover {
+body .add-form textarea[type="submit"]:hover {
   background-color: #33d2ee;
   border: 1px solid black;
   cursor: pointer;
 }
 
-body .add-form select {
-  width: 21rem;
+body .add-form .listIngre {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 20rem;
+}
+
+body .add-form .listIngre .ingre {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body .add-form .listIngre .ingre input[type=checkbox] {
+  width: auto;
+  margin-top: 5px;
+}
+
+body .add-form .listIngre .ingre label {
+  margin-left: 5px;
 }
 /*# sourceMappingURL=add.css.map */

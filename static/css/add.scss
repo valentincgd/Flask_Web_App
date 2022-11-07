@@ -17,7 +17,7 @@ body {
         }
 
         input,
-        textarea, select {
+        textarea{
             font-family: Kanit, 'Montserrat', sans-serif, 'Courier New', Courier, monospace;
             border: 1px solid var(--shadow);
             border-radius: 0.5rem;
@@ -38,8 +38,24 @@ body {
             }
         }
 
-        select{
-            width: 21rem;
+        .listIngre{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            width: 20rem;
+            .ingre{
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                input[type=checkbox]{
+                    width: auto;
+                    margin-top: 5px;
+                }
+                label{
+                    margin-left: 5px;
+                }
+            }
         }
 
     }
