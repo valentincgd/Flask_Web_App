@@ -111,7 +111,8 @@ def index():
         c = conn.cursor()
 
         recipes = c.execute("SELECT * FROM recipes").fetchall()
-        return render_template("index.html", recipes=recipes)
+        rating = c.execute("SELECT rating_recipe_id, rating_author, AVG(rating) FROM ratings GROUP BY rating_recipe_id").fetchall()
+        return render_template("index.html", recipes=recipes, rating=rating)
     return redirect(url_for("login"))
 
 
@@ -214,24 +215,17 @@ def add():
             for i in request.form:
                 if "check_" in i:
                     ingreSelectId.append(request.form.get(i))
+                    cmdSql = "INSERT INTO recipe_ingre ('ingre_id', 'recipe_id', 'qt') VALUES (:ingre, :recipe,:qt)"
+                    c.execute(
+                        cmdSql,
+                        {
+                            "ingre": request.form.get(i),
+                            "recipe": newRecipId,
+                            "qt": request.form.get(i.replace("check_", "qt_")),
+                        },
+                    )
 
-                if "qt_" in i and i.replace("qt_", "") in ingreSelectId:
-                    ingreSelectQt.append(request.form.get(i))
-
-            increment = 0
-            for i in ingreSelectId:
-                cmdSql = "INSERT INTO recipe_ingre ('ingre_id', 'recipe_id', 'qt') VALUES (:ingre, :recipe,:qt)"
-                c.execute(
-                    cmdSql,
-                    {
-                        "ingre": ingreSelectId[increment],
-                        "recipe": newRecipId,
-                        "qt": ingreSelectQt[increment],
-                    },
-                )
-                conn.commit()
-
-                increment += 1
+            conn.commit()
 
             return redirect("/")
 

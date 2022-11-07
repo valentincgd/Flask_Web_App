@@ -85,6 +85,32 @@ header{
         }
         .infos{
             margin-left: 20px;
+            .title{
+
+                .rating{
+
+                    display: flex;
+                    flex-direction: row-reverse;
+                    justify-content: flex-end;
+
+                    button {
+                        background-color: transparent;
+                        border: none;
+                        font-size: 1.5rem;
+                    }
+        
+                    .yellow {
+                        color: rgb(255, 221, 0);
+                    }
+        
+                    .grey {
+                        color: #000000;
+                    }
+
+                }
+
+
+            }
         }
     }
 }
