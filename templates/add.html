@@ -19,6 +19,11 @@
           placeholder="Contenu de la recette"
           name="recipe_body"
         ></textarea>
+        <select name="" id="" multiple>
+          {% for i in ingres %}
+          <option value="{{ i[0] }}">{{ i[1] }}</option>
+          {% endfor %}
+        </select>
         <input type="submit" value="Ajouter" />
       </form>
       {% if errorMessage != "" %} {% block content %}

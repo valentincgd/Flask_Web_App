@@ -181,7 +181,13 @@ def add():
 
         return redirect("/")
     else:
-        return render_template("add.html", errorMessage="non")
+
+        ingres = c.execute(
+            "SELECT * FROM ingredients WHERE 1",
+            {},
+        ).fetchall()
+
+        return render_template("add.html", errorMessage="", ingres = ingres)
 
 
 if __name__ == "__main__":
