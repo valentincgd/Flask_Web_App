@@ -52,8 +52,7 @@ def signup():
             )
 
         # hash the password
-        pwhash = request.form.get("password")
-        # generate_password_hash(request.form.get("password"))
+        pwhash = generate_password_hash(request.form.get("password"))
 
         # insert the row
         c.execute(
@@ -95,9 +94,9 @@ def login():
 
         # check the password is same to password hash
         pwhash = user[0][2]
-        #        if check_password_hash(pwhash, request.form.get("password")) == False:
+        if check_password_hash(pwhash, request.form.get("password")) == False:
 
-        if pwhash != request.form.get("password"):
+            # if pwhash != request.form.get("password"):
             return render_template("login.html", errorMessage="Wrong password.")
 
         # login the user using session
