@@ -128,21 +128,37 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/recipe/<int:recipe_id>")
+@app.route("/recipe/<int:recipe_id>", methods=["GET", "POST"])
 def recipe(recipe_id):
     if "user_id" in session:
+        if request.method == "GET":
 
-        fetchAllRecipes = "SELECT * FROM recipes WHERE recipe_id = :recipe_id"
-        recipe = c.execute(fetchAllRecipes, {"recipe_id": recipe_id}).fetchall()
+            fetchAllRecipes = "SELECT re.recipe_id, re.recipe_author, re.recipe_name, re.body, ROUND(AVG(ra.rating)) FROM recipes re INNER JOIN ratings ra ON re.recipe_id = ra.rating_recipe_id WHERE re.recipe_id = :recipe_id"
+            recipe = c.execute(fetchAllRecipes, {"recipe_id": recipe_id}).fetchall()
 
-        fetchAllIngredients = "SELECT ingredients.ingre_name, ingredients.ingre_img, recipe_ingre.qt FROM recipe_ingre INNER JOIN ingredients ON ingredients.ingre_id = recipe_ingre.ingre_id WHERE recipe_id = :recipe_id"
-        ingre = c.execute(
-            fetchAllIngredients,
-            {"recipe_id": recipe_id},
-        ).fetchall()
-        return render_template("recipe.html", recipes=recipe, ingres=ingre)
+            fetchAllIngredients = "SELECT ingredients.ingre_name, ingredients.ingre_img, recipe_ingre.qt FROM recipe_ingre INNER JOIN ingredients ON ingredients.ingre_id = recipe_ingre.ingre_id WHERE recipe_id = :recipe_id"
+            ingre = c.execute(
+                fetchAllIngredients,
+                {"recipe_id": recipe_id},
+            ).fetchall()
+            return render_template("recipe.html", recipes=recipe, ingres=ingre)
+        elif request.method == "POST":
+            rating = request.form.get("rating")
+
+            cmdSql = "INSERT INTO ratings ('rating_recipe_id', 'rating_author', 'rating') VALUES (:recipe_id, :author, :rating) ON CONFLICT DO UPDATE SET rating = :rating WHERE rating_recipe_id = :recipe_id AND rating_author = :author"
+            c.execute(
+                cmdSql,
+                {
+                    "recipe_id": recipe_id,
+                    "author": session["user_id"],
+                    "rating": rating,
+                },
+            )
+            conn.commit()
+
+            return redirect(url_for("recipe", recipe_id=recipe_id))
     else:
-        return render_template("login.html", errorMessage="")
+        return redirect(url_for("login"))
 
 
 @app.route("/add", methods=["GET", "POST"])

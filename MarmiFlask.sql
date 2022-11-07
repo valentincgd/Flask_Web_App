@@ -1,6 +1,5 @@
 PRAGMA FOREIGN_KEY = ON;
 PRAGMA ENCODING = "UTF-8";
-
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS recipes;
 CREATE TABLE users (
@@ -28,40 +27,32 @@ CREATE TABLE recipe_ingre(
     FOREIGN KEY (ingre_id) REFERENCES ingredients (ingre_id),
     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id)
 );
-
-INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
-(
-    'jérém',
-    'Charlotte',
-    'De la pate dans la casserole je crois'
+CREATE TABLE ratings (
+    rating_recipe_id INTEGER REFERENCES recipes (recipe_id),
+    rating_author VARCHAR(255) NOT NULL REFERENCES users (user_mail),
+    rating INTEGER CHECK(rating IN (1, 2, 3, 4, 5)) NOT NULL,
+    PRIMARY KEY(rating_recipe_id, rating_author)
 );
-INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
-(
-    'jérém',
-    'Tiramisu',
-    'Test'
-);
-INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
-(
-    'jérém',
-    'Moules frites',
-    'Test'
-);
-INSERT INTO "recipe_ingre" ('ingre_id', 'recipe_id', 'qt') VALUES
-(
-    2,
-    1,
-    3
-),(
-    1,
-    1,
-    2
-);
-INSERT INTO "ingredients" ('ingre_name', 'ingre_img') VALUES
-(
-    "carottes",
-    "/static/img/carottes.png"
-),(
-    "farine",
-    "/static/img/farine.png"
-);
+INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body')
+VALUES (
+        'jérém',
+        'Charlotte',
+        'De la pate dans la casserole je crois'
+    );
+INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body')
+VALUES ('jérém', 'Tiramisu', 'Test');
+INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body')
+VALUES (
+        'jérém',
+        'Moules frites',
+        'Test'
+    );
+INSERT INTO "recipe_ingre" ('ingre_id', 'recipe_id', 'qt')
+VALUES (2, 1, 3),
+    (1, 1, 2);
+INSERT INTO "ingredients" ('ingre_name', 'ingre_img')
+VALUES (
+        "carottes",
+        "/static/img/carottes.png"
+    ),
+    ("farine", "/static/img/farine.png");
