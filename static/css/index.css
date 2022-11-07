@@ -2,7 +2,7 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: Kanit, "Montserrat", sans-serif, "Courier New", Courier, monospace;
+  font-family: Kanit, 'Montserrat', sans-serif, 'Courier New', Courier, monospace;
   color: var(--txt);
 }
 
@@ -12,21 +12,30 @@ header {
   width: calc(100% - 40px);
   height: 70px;
   background: var(--select);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding-left: 20px;
   padding-right: 20px;
 }
+
 header h2 {
   padding: 0;
   margin: 0;
   color: var(--background);
 }
+
 header a {
   text-decoration: none;
   color: var(--background);
 }
+
 header .logOut .block {
   width: 25px;
   height: 25px;
@@ -34,52 +43,80 @@ header .logOut .block {
   border-radius: 8px;
   position: relative;
 }
+
 header .logOut .block .arrow {
   color: var(--background);
   position: absolute;
   top: 0px;
   left: 60%;
-  transform: translate(50% 50%);
+  -webkit-transform: translate(50% 50%);
+          transform: translate(50% 50%);
   font-size: 20px;
+  -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+
 header .logOut .block .arrow ion-icon {
   background: var(--select);
 }
+
 header .logOut .block:active .arrow {
   left: 90%;
+  -webkit-transition: 0.1s;
   transition: 0.1s;
 }
 
 .container {
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding-bottom: 50px;
 }
+
 .container .block {
   text-decoration: none;
   color: var(--txt);
   margin-top: 40px;
   width: 80%;
   background: var(--background);
-  filter: drop-shadow(0 0 0.3rem var(--shadow));
+  -webkit-filter: drop-shadow(0 0 0.3rem var(--shadow));
+          filter: drop-shadow(0 0 0.3rem var(--shadow));
   padding: 30px;
   border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   cursor: pointer;
+  -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+
 .container .block:hover {
-  filter: drop-shadow(0 0 0.5rem var(--txt));
+  -webkit-filter: drop-shadow(0 0 0.5rem var(--txt));
+          filter: drop-shadow(0 0 0.5rem var(--txt));
+  -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+
 .container .block .img img {
   width: 100px;
 }
+
 .container .block .infos {
   margin-left: 20px;
-}/*# sourceMappingURL=index.css.map */
+}
+/*# sourceMappingURL=index.css.map */

@@ -32,19 +32,19 @@ INSERT INTO "users"
 VALUES ('j@j.j', 'jérém', 'j');
 INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
 (
-    'j',
+    'jérém',
     'Charlotte',
     'De la pate dans la casserole je crois'
 );
 INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
 (
-    'j',
+    'jérém',
     'Tiramisu',
     'Test'
 );
 INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body') VALUES
 (
-    'j',
+    'jérém',
     'Moules frites',
     'Test'
 );

@@ -10,7 +10,7 @@ from pathlib import Path
 def init_db():
     db = sqlite3.connect("MarmiFlask.db")
     db.row_factory = sqlite3.Row
-    db.executescript(Path("MarmiFlask.sql").read_text())
+    db.executescript(Path("MarmiFlask.sql").read_text(encoding="utf-8"))
 
 
 if not Path("MarmiFlask.db").exists():
@@ -180,7 +180,13 @@ def add():
 
         return redirect("/")
     else:
-        return render_template("add.html", errorMessage="non")
+
+        ingres = c.execute(
+            "SELECT * FROM ingredients WHERE 1",
+            {},
+        ).fetchall()
+
+        return render_template("add.html", errorMessage="", ingres = ingres)
 
 
 if __name__ == "__main__":
