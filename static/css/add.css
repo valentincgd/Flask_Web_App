@@ -3,52 +3,42 @@ body .add-form {
   margin: 1rem;
   padding: 1rem;
   border-radius: 1rem;
-  -webkit-box-shadow: 0 0 0.5rem var(--shadow);
-          box-shadow: 0 0 0.5rem var(--shadow);
-  display: -webkit-box;
-  display: -ms-flexbox;
+  box-shadow: 0 0 0.5rem var(--shadow);
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   gap: 1rem;
   text-align: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
-
 body .add-form p {
   margin: 0;
 }
-
 body .add-form input,
-body .add-form textarea {
-  font-family: Kanit, 'Montserrat', sans-serif, 'Courier New', Courier, monospace;
+body .add-form textarea, body .add-form select {
+  font-family: Kanit, "Montserrat", sans-serif, "Courier New", Courier, monospace;
   border: 1px solid var(--shadow);
   border-radius: 0.5rem;
   padding: 0.5rem;
-  -webkit-transition: all ease 0.5s;
   transition: all ease 0.5s;
   width: 20rem;
 }
-
-body .add-form input[type="submit"],
-body .add-form textarea[type="submit"] {
+body .add-form input[type=submit],
+body .add-form textarea[type=submit], body .add-form select[type=submit] {
   width: -webkit-min-content;
   width: -moz-min-content;
   width: min-content;
   background-color: var(--select);
   color: var(--background);
 }
-
-body .add-form input[type="submit"]:hover,
-body .add-form textarea[type="submit"]:hover {
-  background-color: #33d2ee;
+body .add-form input[type=submit]:hover,
+body .add-form textarea[type=submit]:hover, body .add-form select[type=submit]:hover {
+  background-color: rgb(51, 210, 238);
   border: 1px solid black;
   cursor: pointer;
 }
+body .add-form select {
+  width: 21rem;
+}/*# sourceMappingURL=add.css.map */
 
 body .add-form .listIngre {
   display: -webkit-box;
