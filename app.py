@@ -57,8 +57,15 @@ def signup():
 
         conn.commit()
 
+        # get user id for session
+        sqlCmd = "SELECT * FROM users WHERE user_mail=:email"
+        userInformation = c.execute(
+            sqlCmd,
+            {"email": email},
+        ).fetchone()
+
         # return success
-        session["user_id"] = email
+        session["user_id"] = userInformation[0]
 
         return redirect("/")
     else:
@@ -82,7 +89,7 @@ def login():
             {"email": email},
         ).fetchone()
 
-        if len(userInformation) != 1:
+        if not userInformation:
             error_message = "You didn't register."
             return render_template("login.html", error_message=error_message)
 
@@ -95,7 +102,7 @@ def login():
 
         # login the user using session
 
-        session["user_id"] = email
+        session["user_id"] = userInformation[0]
 
         # return success
         return redirect("/")
@@ -111,7 +118,9 @@ def index():
         c = conn.cursor()
 
         recipes = c.execute("SELECT * FROM recipes").fetchall()
-        rating = c.execute("SELECT rating_recipe_id, rating_author, ROUND(AVG(rating)) FROM ratings GROUP BY rating_recipe_id").fetchall()
+        rating = c.execute(
+            "SELECT rating_recipe_id, rating_author, ROUND(AVG(rating)) FROM ratings GROUP BY rating_recipe_id"
+        ).fetchall()
         return render_template("index.html", recipes=recipes, rating=rating)
     return redirect(url_for("login"))
 
@@ -133,7 +142,10 @@ def recipe(recipe_id):
             fetchAllRecipes = "SELECT re.recipe_id, re.recipe_author, re.recipe_name, re.body, ROUND(AVG(ra.rating)) FROM recipes re INNER JOIN ratings ra ON re.recipe_id = ra.rating_recipe_id WHERE re.recipe_id = :recipe_id"
             fetchMyRecipes = "SELECT re.recipe_id, re.recipe_author, re.recipe_name, re.body, ra.rating FROM recipes re INNER JOIN ratings ra ON re.recipe_id = ra.rating_recipe_id WHERE re.recipe_id = :recipe_id AND ra.rating_author = :rating_author"
             recipe = c.execute(fetchAllRecipes, {"recipe_id": recipe_id}).fetchall()
-            myRecipe = c.execute(fetchMyRecipes, {"recipe_id": recipe_id, "rating_author": session["user_id"]}).fetchall()
+            myRecipe = c.execute(
+                fetchMyRecipes,
+                {"recipe_id": recipe_id, "rating_author": session["user_id"]},
+            ).fetchall()
 
             fetchAllIngredients = "SELECT ingredients.ingre_name, ingredients.ingre_img, recipe_ingre.qt FROM recipe_ingre INNER JOIN ingredients ON ingredients.ingre_id = recipe_ingre.ingre_id WHERE recipe_id = :recipe_id"
             ingre = c.execute(
@@ -141,7 +153,9 @@ def recipe(recipe_id):
                 {"recipe_id": recipe_id},
             ).fetchall()
 
-            return render_template("recipe.html", recipes=recipe, ingres=ingre, myRecipe=myRecipe)
+            return render_template(
+                "recipe.html", recipes=recipe, ingres=ingre, myRecipe=myRecipe
+            )
 
         elif request.method == "POST":
 
