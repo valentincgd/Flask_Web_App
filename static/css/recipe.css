@@ -95,6 +95,9 @@ header .logOut .block:active .arrow {
   -webkit-box-direction: reverse;
       -ms-flex-direction: row-reverse;
           flex-direction: row-reverse;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -121,6 +124,12 @@ header .logOut .block:active .arrow {
 .container .infosRecipe .rating button:hover,
 .container .infosRecipe .rating button:hover ~ button {
   color: #ffbb00;
+}
+
+.container .infosRecipe .rating span {
+  font-size: 1rem;
+  margin-top: 3px;
+  margin-left: 5px;
 }
 
 .container .listRecipe {

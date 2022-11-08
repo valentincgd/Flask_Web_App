@@ -21,6 +21,9 @@
         <div class="infos">
           <h3>{{ i[2] }}</h3>
           <form class="rating" method="post">
+            {% for m in myRecipe %}
+            <span>Ma note: {{ m[4] | int }}/5</span>
+            {% endfor %}
             {% for r in range(0, 5 - i[4] | int) %}
             <button
               type="submit"
