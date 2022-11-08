@@ -6,7 +6,7 @@ from pathlib import Path
 
 # coding: UTF-8
 
-
+# Create and connect DB
 if not Path("MarmiFlask.db").exists():
     db = sqlite3.connect("MarmiFlask.db")
     db.row_factory = sqlite3.Row
@@ -117,7 +117,8 @@ def index():
         conn = log_database()
         c = conn.cursor()
 
-        recipes = c.execute("SELECT * FROM recipes").fetchall()
+        # Select all recipes and ratings
+        recipes = c.execute("SELECT *, users.user_username FROM recipes LEFT JOIN users ON users.user_id = recipes.recipe_author").fetchall()
         rating = c.execute(
             "SELECT rating_recipe_id, rating_author, ROUND(AVG(rating)) FROM ratings GROUP BY rating_recipe_id"
         ).fetchall()
@@ -139,14 +140,16 @@ def recipe(recipe_id):
 
         if request.method == "GET":
 
-            fetchAllRecipes = "SELECT re.recipe_id, re.recipe_author, re.recipe_name, re.body, ROUND(AVG(ra.rating)) FROM recipes re INNER JOIN ratings ra ON re.recipe_id = ra.rating_recipe_id WHERE re.recipe_id = :recipe_id"
-            fetchMyRecipes = "SELECT re.recipe_id, re.recipe_author, re.recipe_name, re.body, ra.rating FROM recipes re INNER JOIN ratings ra ON re.recipe_id = ra.rating_recipe_id WHERE re.recipe_id = :recipe_id AND ra.rating_author = :rating_author"
+            # Select recipes and associated ratings
+            fetchAllRecipes = "SELECT re.recipe_id, us.user_username, re.recipe_name, re.body, ROUND(AVG(ra.rating)) FROM recipes re LEFT JOIN ratings ra ON re.recipe_id = ra.rating_recipe_id LEFT JOIN users us ON re.recipe_author = us.user_id WHERE re.recipe_id = :recipe_id"
+            fetchMyRating = "SELECT re.recipe_id, re.recipe_author, re.recipe_name, re.body, ra.rating FROM recipes re LEFT JOIN ratings ra ON re.recipe_id = ra.rating_recipe_id WHERE re.recipe_id = :recipe_id AND ra.rating_author = :rating_author"
             recipe = c.execute(fetchAllRecipes, {"recipe_id": recipe_id}).fetchall()
-            myRecipe = c.execute(
-                fetchMyRecipes,
+            myRating = c.execute(
+                fetchMyRating,
                 {"recipe_id": recipe_id, "rating_author": session["user_id"]},
             ).fetchall()
 
+            # Select associated ingredients
             fetchAllIngredients = "SELECT ingredients.ingre_name, ingredients.ingre_img, recipe_ingre.qt FROM recipe_ingre INNER JOIN ingredients ON ingredients.ingre_id = recipe_ingre.ingre_id WHERE recipe_id = :recipe_id"
             ingre = c.execute(
                 fetchAllIngredients,
@@ -154,13 +157,14 @@ def recipe(recipe_id):
             ).fetchall()
 
             return render_template(
-                "recipe.html", recipes=recipe, ingres=ingre, myRecipe=myRecipe
+                "recipe.html", recipes=recipe, ingres=ingre, myRating=myRating
             )
 
         elif request.method == "POST":
 
             rating = request.form.get("rating")
 
+            # Insert or update rating
             cmdSql = "INSERT INTO ratings ('rating_recipe_id', 'rating_author', 'rating') VALUES (:recipe_id, :author, :rating) ON CONFLICT DO UPDATE SET rating = :rating WHERE rating_recipe_id = :recipe_id AND rating_author = :author"
             c.execute(
                 cmdSql,
@@ -204,31 +208,26 @@ def add():
                 error_message = "This recipe already exists"
                 return render_template("add.html", error_message=error_message)
 
-            # get the username of connected user
-            cmdSql = "SELECT user_username FROM users WHERE user_mail=:user_mail"
-            username = c.execute(
-                cmdSql,
-                {"user_mail": session["user_id"]},
-            ).fetchall()
-
             # insert the row
             cmdSql = "INSERT INTO recipes ('recipe_author', 'recipe_name', 'body') VALUES (:username, :title,:body)"
             c.execute(
                 cmdSql,
                 {
-                    "username": username[0][0],
+                    "username": session["user_id"],
                     "title": recipe_name,
                     "body": recipe_body,
                 },
             )
             conn.commit()
 
+            # Select the last recipe id
             newRecipId = c.execute(
                 "SELECT MAX(recipe_id) FROM recipes WHERE 1",
             ).fetchall()
 
             newRecipId = newRecipId[0][0]
 
+            # Insert all associated ingredients
             ingreSelectId = []
             ingreSelectQt = []
             for i in request.form:
@@ -250,6 +249,7 @@ def add():
 
         else:
 
+            # Select all ingredients
             cmdSql = "SELECT * FROM ingredients WHERE 1"
             ingres = c.execute(cmdSql).fetchall()
 

@@ -3,16 +3,17 @@ PRAGMA ENCODING = "UTF-8";
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS recipes;
 CREATE TABLE users (
-    user_mail VARCHAR(255) UNIQUE NOT NULL PRIMARY KEY,
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_mail VARCHAR(255) UNIQUE NOT NULL,
     user_username VARCHAR(255) UNIQUE NOT NULL,
     user_password VARCHAR(255) NOT NULL
 );
 CREATE TABLE recipes (
     recipe_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    recipe_author VARCHAR(255) NOT NULL,
+    recipe_author INTEGER NOT NULL,
     recipe_name VARCHAR(255) NOT NULL,
     body TEXT NOT NULL,
-    FOREIGN KEY (recipe_author) REFERENCES users (user_username)
+    FOREIGN KEY (recipe_author) REFERENCES users (user_id)
 );
 CREATE TABLE ingredients (
     ingre_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,21 +30,21 @@ CREATE TABLE recipe_ingre(
 );
 CREATE TABLE ratings (
     rating_recipe_id INTEGER REFERENCES recipes (recipe_id),
-    rating_author VARCHAR(255) NOT NULL REFERENCES users (user_mail),
+    rating_author INTEGER NOT NULL REFERENCES users (user_id),
     rating INTEGER CHECK(rating IN (1, 2, 3, 4, 5)) NOT NULL,
     PRIMARY KEY(rating_recipe_id, rating_author)
 );
 INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body')
 VALUES (
-        'jérém',
+        1,
         'Charlotte',
         'De la pate dans la casserole je crois'
     );
 INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body')
-VALUES ('jérém', 'Tiramisu', 'Test');
+VALUES (1, 'Tiramisu', 'Test');
 INSERT INTO "recipes" ('recipe_author', 'recipe_name', 'body')
 VALUES (
-        'jérém',
+        1,
         'Moules frites',
         'Test'
     );
