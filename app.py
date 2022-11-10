@@ -36,17 +36,17 @@ def signup():
         username = request.form["username"]
 
         # hash the password
-        pwhash = generate_password_hash(password)
+        pw_hash = generate_password_hash(password)
 
         # insert the row
-        sqlCmd = "INSERT INTO users (user_mail, user_password,user_username) VALUES (:email, :password,:username)"
+        sql_cmd = "INSERT INTO users (user_mail, user_password,user_username) VALUES (:email, :password,:username)"
 
         try:
             c.execute(
-                sqlCmd,
+                sql_cmd,
                 {
                     "email": email,
-                    "password": pwhash,
+                    "password": pw_hash,
                     "username": username,
                 },
             )
@@ -58,14 +58,14 @@ def signup():
         conn.commit()
 
         # get user id for session
-        sqlCmd = "SELECT * FROM users WHERE user_mail=:email"
-        userInformation = c.execute(
-            sqlCmd,
+        sql_cmd = "SELECT * FROM users WHERE user_mail=:email"
+        user_information = c.execute(
+            sql_cmd,
             {"email": email},
         ).fetchone()
 
         # return success
-        session["user_id"] = userInformation[0]
+        session["user_id"] = user_information[0]
 
         return redirect("/")
     else:
@@ -83,26 +83,26 @@ def login():
         password = request.form["password"]
 
         # check if email exist in the database
-        sqlCmd = "SELECT * FROM users WHERE user_mail=:email"
-        userInformation = c.execute(
-            sqlCmd,
+        sql_cmd = "SELECT * FROM users WHERE user_mail=:email"
+        user_information = c.execute(
+            sql_cmd,
             {"email": email},
         ).fetchone()
 
-        if not userInformation:
+        if not user_information:
             error_message = "You didn't register."
             return render_template("login.html", error_message=error_message)
 
         # check the password is same to password hash
-        pwhash = userInformation[2]
+        pw_hash = user_information[2]
 
-        if check_password_hash(pwhash, password) == False:
+        if check_password_hash(pw_hash, password) == False:
             error_message = "Wrong password."
             return render_template("login.html", error_message=error_message)
 
         # login the user using session
 
-        session["user_id"] = userInformation[0]
+        session["user_id"] = user_information[0]
 
         # return success
         return redirect("/")
@@ -118,7 +118,9 @@ def index():
         c = conn.cursor()
 
         # Select all recipes and ratings
-        recipes = c.execute("SELECT *, users.user_username FROM recipes LEFT JOIN users ON users.user_id = recipes.recipe_author").fetchall()
+        recipes = c.execute(
+            "SELECT *, users.user_username FROM recipes LEFT JOIN users ON users.user_id = recipes.recipe_author"
+        ).fetchall()
         rating = c.execute(
             "SELECT rating_recipe_id, rating_author, ROUND(AVG(rating)) FROM ratings GROUP BY rating_recipe_id"
         ).fetchall()
@@ -141,11 +143,11 @@ def recipe(recipe_id):
         if request.method == "GET":
 
             # Select recipes and associated ratings
-            fetchAllRecipes = "SELECT re.recipe_id, us.user_username, re.recipe_name, re.body, ROUND(AVG(ra.rating)) FROM recipes re LEFT JOIN ratings ra ON re.recipe_id = ra.rating_recipe_id LEFT JOIN users us ON re.recipe_author = us.user_id WHERE re.recipe_id = :recipe_id"
-            fetchMyRating = "SELECT re.recipe_id, re.recipe_author, re.recipe_name, re.body, ra.rating FROM recipes re LEFT JOIN ratings ra ON re.recipe_id = ra.rating_recipe_id WHERE re.recipe_id = :recipe_id AND ra.rating_author = :rating_author"
-            recipe = c.execute(fetchAllRecipes, {"recipe_id": recipe_id}).fetchall()
-            myRating = c.execute(
-                fetchMyRating,
+            fetch_all_recipes = "SELECT re.recipe_id, us.user_username, re.recipe_name, re.body, ROUND(AVG(ra.rating)) FROM recipes re LEFT JOIN ratings ra ON re.recipe_id = ra.rating_recipe_id LEFT JOIN users us ON re.recipe_author = us.user_id WHERE re.recipe_id = :recipe_id"
+            fetch_my_rating = "SELECT re.recipe_id, re.recipe_author, re.recipe_name, re.body, ra.rating FROM recipes re LEFT JOIN ratings ra ON re.recipe_id = ra.rating_recipe_id WHERE re.recipe_id = :recipe_id AND ra.rating_author = :rating_author"
+            recipe = c.execute(fetch_all_recipes, {"recipe_id": recipe_id}).fetchall()
+            my_rating = c.execute(
+                fetch_my_rating,
                 {"recipe_id": recipe_id, "rating_author": session["user_id"]},
             ).fetchall()
 
@@ -157,7 +159,7 @@ def recipe(recipe_id):
             ).fetchall()
 
             return render_template(
-                "recipe.html", recipes=recipe, ingres=ingre, myRating=myRating
+                "recipe.html", recipes=recipe, ingres=ingre, my_rating=my_rating
             )
 
         elif request.method == "POST":
@@ -165,9 +167,9 @@ def recipe(recipe_id):
             rating = request.form.get("rating")
 
             # Insert or update rating
-            cmdSql = "INSERT INTO ratings ('rating_recipe_id', 'rating_author', 'rating') VALUES (:recipe_id, :author, :rating) ON CONFLICT DO UPDATE SET rating = :rating WHERE rating_recipe_id = :recipe_id AND rating_author = :author"
+            cmd_sql = "INSERT INTO ratings ('rating_recipe_id', 'rating_author', 'rating') VALUES (:recipe_id, :author, :rating) ON CONFLICT DO UPDATE SET rating = :rating WHERE rating_recipe_id = :recipe_id AND rating_author = :author"
             c.execute(
-                cmdSql,
+                cmd_sql,
                 {
                     "recipe_id": recipe_id,
                     "author": session["user_id"],
@@ -198,9 +200,9 @@ def add():
                 return render_template("add.html", error_message=error_message)
 
             # check if recipe exist in the database
-            cmdSql = "SELECT * FROM recipes WHERE recipe_name=:recipe_name"
+            cmd_sql = "SELECT * FROM recipes WHERE recipe_name=:recipe_name"
             exist = c.execute(
-                cmdSql,
+                cmd_sql,
                 {"recipe_name": recipe_name},
             ).fetchall()
 
@@ -209,9 +211,9 @@ def add():
                 return render_template("add.html", error_message=error_message)
 
             # insert the row
-            cmdSql = "INSERT INTO recipes ('recipe_author', 'recipe_name', 'body') VALUES (:username, :title,:body)"
+            cmd_sql = "INSERT INTO recipes ('recipe_author', 'recipe_name', 'body') VALUES (:username, :title,:body)"
             c.execute(
-                cmdSql,
+                cmd_sql,
                 {
                     "username": session["user_id"],
                     "title": recipe_name,
@@ -221,24 +223,24 @@ def add():
             conn.commit()
 
             # Select the last recipe id
-            newRecipId = c.execute(
+            new_recip_id = c.execute(
                 "SELECT MAX(recipe_id) FROM recipes WHERE 1",
             ).fetchall()
 
-            newRecipId = newRecipId[0][0]
+            new_recip_id = new_recip_id[0][0]
 
             # Insert all associated ingredients
-            ingreSelectId = []
-            ingreSelectQt = []
+            ingre_select_id = []
+            ingre_select_qt = []
             for i in request.form:
                 if "check_" in i:
-                    ingreSelectId.append(request.form.get(i))
-                    cmdSql = "INSERT INTO recipe_ingre ('ingre_id', 'recipe_id', 'qt') VALUES (:ingre, :recipe,:qt)"
+                    ingre_select_id.append(request.form.get(i))
+                    cmd_sql = "INSERT INTO recipe_ingre ('ingre_id', 'recipe_id', 'qt') VALUES (:ingre, :recipe,:qt)"
                     c.execute(
-                        cmdSql,
+                        cmd_sql,
                         {
                             "ingre": request.form.get(i),
-                            "recipe": newRecipId,
+                            "recipe": new_recip_id,
                             "qt": request.form.get(i.replace("check_", "qt_")),
                         },
                     )
@@ -250,8 +252,8 @@ def add():
         else:
 
             # Select all ingredients
-            cmdSql = "SELECT * FROM ingredients WHERE 1"
-            ingres = c.execute(cmdSql).fetchall()
+            cmd_sql = "SELECT * FROM ingredients WHERE 1"
+            ingres = c.execute(cmd_sql).fetchall()
 
             return render_template("add.html", error_message="", ingres=ingres)
     else:
